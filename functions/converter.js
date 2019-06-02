@@ -8,4 +8,5 @@ async function converter() {
   for (let i =0; i < result.length; i++){
     convertedVerse.push(anvaad.translit(result[i]));
   }
+  return convertedVerse;
 }
