@@ -17,7 +17,7 @@ const getJSON = require('get-json');
 //   )}
 // )}
 let retrievedShabad = [];
-function fetchShabad(){
+function fetchHukam(){
   return new Promise(resolve => {
     getJSON('https://api.banidb.com/v2/hukamnamas/today', (error, response) => {
       if(!error) {

@@ -1,12 +1,15 @@
 const anvaad = require('anvaad');
-const hukam = require('./fetch_hukam')
+const hukam = require('./api_fetch')
 
-
-let convertedVerse = [];
-async function converter() {
-  var result = await hukam.fetchShabad();
-  for (let i =0; i < result.length; i++){
-    convertedVerse.push(anvaad.translit(result[i]));
+async function convertTemplate (pulledShabad, newArray) {
+  var result = await pulledShabad; 
+  for(let i = 0; i < result.length - 1; i++){
+    newArray.push(anvaad.translit(result[i]));
   }
-  return convertedVerse;
+  console.log(newArray);
+  return newArray;
 }
+
+//Translit for Hukamnama
+let convertedVerse = [];
+convertTemplate(hukam.fetchHukam, convertedVerse);
