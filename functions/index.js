@@ -6,6 +6,8 @@ const {
   Suggestions,
 } = require('actions-on-google');
 const {Card, Suggestion} = require('dialogflow-fulfillment');
+const converter = require('./converter');
+const api = require('./api_fetch')
  
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
  
@@ -28,18 +30,18 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
   // below to get this function to be run when a Dialogflow intent is matched
   function hukamHandler(agent) {
-    agent.add(`This message is from Dialogflow's Cloud Functions for Firebase editor!`);
+    let convertedHukam = [];
+    agent.add(convertTemplate(api.fetchHukam, convertedHukam));
     agent.add(new Card({
-        title: `Title: this is a card title`,
-        imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
-        text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
-        buttonText: 'This is a button',
-        buttonUrl: 'https://assistant.google.com/'
+        title: `Today's Hukamnama`,
+        imageUrl: 'http://www.banidb.com/wp-content/uploads/2018/03/full-banidb-logo.png',
+        text: `Brought to you by BaniDB`,
+        buttonText: 'Take a look on github!',
+        buttonUrl: 'https://github.com/AkalUstat/sttm-assistant'
       })
     );
     agent.add(new Suggestion(`Quick Reply`));
     agent.add(new Suggestion(`Suggestion`));
-    agent.setContext({ name: 'weather', lifespan: 2, parameters: { city: 'Rome' }});
   }
 
   // Uncomment and edit to make your own Google Assistant intent handler

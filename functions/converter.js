@@ -6,10 +6,5 @@ async function convertTemplate (pulledShabad, newArray) {
   for(let i = 0; i < result.length - 1; i++){
     newArray.push(anvaad.translit(result[i]));
   }
-  console.log(newArray);
   return newArray;
 }
-
-//Translit for Hukamnama
-let convertedVerse = [];
-convertTemplate(hukam.fetchHukam, convertedVerse);
