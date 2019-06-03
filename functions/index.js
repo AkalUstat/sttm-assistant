@@ -25,6 +25,15 @@ const cards = {
     },
     display: 'WHITE',
   },
+  'Error': {
+    title: "Error 1313",
+    text: 'Unfortunately, something went wrong ):',
+    image: {
+      url: './assets/404.png',
+      accessibilityText: 'Sikh guy smiling at you',
+    },
+    display: 'WHITE',
+  }
 };
 
 app.intent("Default Welcome Intent", (conv) => {
@@ -41,11 +50,12 @@ app.intent("HukamFetch", (conv) => {
   return converter.convertTemplate(api.fetchHukam()).then((result) => {
 
     conv.ask(result.join('\n'));
-    conv.ask(new BasicCard(cards['BaniDB']));
+    conv.ask(new BasicCard(cards['Error']));
     return;
   }).catch((error) => {
     console.error("errorMessage:", error);
     conv.ask("Sorry we couldn't get Hukamnama for you ): ");
+    conv.ask(new BasicCard(cards['Error']));
     return;
   });
 });
