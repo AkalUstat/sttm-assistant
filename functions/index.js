@@ -1,17 +1,31 @@
+'use strict';
+
 const functions = require('firebase-functions');
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {
   dialogflow,
   Permission,
+  BasicCard,
   Suggestions,
 } = require('actions-on-google');
-const {Card, Suggestion} = require('dialogflow-fulfillment');
 const converter = require('./converter');
 const api = require('./api_fetch')
  
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
 
 const app = dialogflow();
+
+const cards = {
+  'BaniDB': {
+    title: "Today's Hukamnama",
+    text: 'Brought to you by BaniDB!',
+    image: {
+      url: 'http://www.banidb.com/wp-content/uploads/2018/03/full-banidb-logo.png',
+      accessibilityText: 'BaniDB logo',
+    },
+    display: 'WHITE',
+  },
+};
 
 app.intent("Default Welcome Intent", (conv) => {
   conv.ask(`Welcome to the Gurbaani Voice!`);
@@ -23,23 +37,15 @@ app.intent("Default Fallback Intent", (conv) => {
 });
 
 app.intent("HukamFetch", (conv) => {
-  // var card = new Card({
-  //   title: `Today's Hukamnama`,
-  //   text: `Brought to you by BaniDB`,
-  //   buttons: new Button({
-  //     title: 'Take a look on github!',
-  //     url: 'https://github.com/AkalUstat/sttm-assistant',
-  //   }),
-  //   image: new Image({
-  //     url: 'http://www.banidb.com/wp-content/uploads/2018/03/full-banidb-logo.png',
-  //     alt: 'Brought to you by BaniDB',
-  //   })
-  // });
-
+ 
   return converter.convertTemplate(api.fetchHukam()).then((result) => {
 
     conv.ask(result.join('\n'));
-    
+    if(!conv.screen) {
+      conv.ask(cards[BaniDB].text);
+    } else {
+      conv.ask(cards[BaniDB]);
+    }
     //conv.ask(card);
     // conv.ask(new Suggestion(`Quick Reply`));
     // conv.ask(new Suggestion(`Suggestion`));
