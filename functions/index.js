@@ -37,15 +37,11 @@ app.intent("Default Fallback Intent", (conv) => {
 });
 
 app.intent("HukamFetch", (conv) => {
- 
+  
   return converter.convertTemplate(api.fetchHukam()).then((result) => {
 
     conv.ask(result.join('\n'));
-    if(!conv.screen) {
-      conv.ask(cards[BaniDB].text);
-    } else {
-      conv.ask(cards[BaniDB]);
-    }
+    conv.ask(new BasicCard(cards['BaniDB']));
     //conv.ask(card);
     // conv.ask(new Suggestion(`Quick Reply`));
     // conv.ask(new Suggestion(`Suggestion`));
@@ -53,7 +49,7 @@ app.intent("HukamFetch", (conv) => {
     return;
   }).catch((error) => {
     console.error("errorMessage:", error);
-    conv.ask("Sorry we couldn't get Hukamnama for you");
+    conv.ask("Sorry we couldn't get Hukamnama for you ): ");
     return;
   });
 });
