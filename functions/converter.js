@@ -28,9 +28,19 @@ async function ipaTranslit (pullShabadFunc) {
   return newArray;
   
 }
+async function devnagriTranslit (pullShabadFunc) {
+  var result = await pullShabadFunc;
+  var newArray = []
+  for(let i = 0; i < result.length - 1; i++){
+    newArray.push(anvaad.translit(result[i], 'devnagri'));
+  }
+  return newArray;
+  
+}
 // exports.engTranslit = engTranslit;
 module.exports = {
   engTranslit, 
   uniPunjabi,
-  ipaTranslit
+  ipaTranslit,
+  devnagriTranslit
 };
