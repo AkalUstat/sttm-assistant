@@ -23,7 +23,7 @@ async function ipaTranslit (pullShabadFunc) {
   var result = await pullShabadFunc;
   var newArray = []
   for(let i = 0; i < result.length - 1; i++){
-    newArray.push(anvaad.translit(result[i], ipa));
+    newArray.push(anvaad.translit(result[i], 'ipa'));
   }
   return newArray;
   
