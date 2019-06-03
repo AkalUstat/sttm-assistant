@@ -33,6 +33,15 @@ const cards = {
       accessibilityText: 'Sikh guy smiling at you',
     },
     display: 'WHITE',
+  }, 
+  'Khalis': {
+    title: "KhalisFoundation", 
+    text: 'The the website or the github', 
+    image: {
+      url: 'https://khalisfoundation.org/wp-content/uploads/2016/11/khalis-logo-inv-hq.png',
+      accessibilityText: 'KhalisFoundation Logo', 
+    }, 
+    display: "WHITE", 
   }
 };
 
@@ -47,7 +56,7 @@ app.intent("Default Fallback Intent", (conv) => {
 
 app.intent("HukamFetch", (conv) => {
   
-  return converter.convertTemplate(api.fetchHukam()).then((result) => {
+  return converter.uniPunjabi(api.fetchHukam()).then((result) => {
 
     conv.ask(result.join('\n'));
     if(!conv.screen) {
@@ -62,6 +71,11 @@ app.intent("HukamFetch", (conv) => {
     conv.ask(new BasicCard(cards['Error']));
     return;
   });
+});
+
+app.intent("Creator", (conv) => {
+  conv.ask('I am created by Khalis Foundation');
+  conv.ask(new BasicCard(cards['Khalis']));
 });
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
