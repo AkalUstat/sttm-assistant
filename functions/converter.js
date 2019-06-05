@@ -11,7 +11,7 @@ async function engTranslit (pullShabadFunc) {
   
 }
 
-async function uniPunjabi (pullShabadFunc) {
+async function unicodeGurmukhi (pullShabadFunc) {
   var result = await pullShabadFunc;
   var newArray = []
   for(let i = 0; i < result.length - 1; i++){
@@ -40,7 +40,7 @@ async function devnagriTranslit (pullShabadFunc) {
 // exports.engTranslit = engTranslit;
 module.exports = {
   engTranslit, 
-  uniPunjabi,
+  unicodeGurmukhi,
   ipaTranslit,
   devnagriTranslit
 };

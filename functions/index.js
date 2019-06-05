@@ -4,8 +4,8 @@ const functions = require('firebase-functions');
 const {WebhookClient} = require('dialogflow-fulfillment');
 const {
   dialogflow,
-  Permission,
   BasicCard,
+  SimpleResponse,
   Suggestions,
 } = require('actions-on-google');
 const converter = require('./converter');
@@ -46,7 +46,7 @@ const cards = {
 };
 
 app.intent("Default Welcome Intent", (conv) => {
-  conv.ask(`Welcome to the Gurbaani Voice!`);
+  conv.ask(`Welcome to Gurbaani Voice!`);
 });
 
 app.intent("Default Fallback Intent", (conv) => {
@@ -56,9 +56,13 @@ app.intent("Default Fallback Intent", (conv) => {
 
 app.intent("HukamFetch", (conv) => {
   
-  return converter.uniPunjabi(api.fetchHukam()).then((result) => {
+  return converter.unicodeGurmukhi(api.fetchHukam()).then((result) => {
 
-    conv.ask(result.join('\n'));
+    // conv.ask(result.join('\n'));
+    conv.ask(new SimpleResponse({
+      speech: '',
+      text: result.join('\n'),
+    }));
     if(!conv.screen) {
       conv.ask(cards['BaniDB'].text);
     }else {
