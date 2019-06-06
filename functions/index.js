@@ -59,10 +59,10 @@ app.intent("HukamFetch", (conv) => {
   return converter.unicodeGurmukhi(api.fetchHukam()).then((result) => {
 
     // conv.ask(result.join('\n'));
-    conv.ask(new SimpleResponse({
-      speech: '',
-      text: result.join('\n'),
-    }));
+    // conv.ask(new SimpleResponse({
+    //   speech: '',
+    //   text: result.join('\n'),
+    // }));
     if(!conv.screen) {
       conv.ask(cards['BaniDB'].text);
     }else {
