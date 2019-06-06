@@ -59,19 +59,31 @@ app.intent("HukamFetch", (conv) => {
   return converter.unicodeGurmukhi(api.fetchHukam()).then((result) => {
 
     // conv.ask(result.join('\n'));
-    // conv.ask(new SimpleResponse({
-    //   speech: '',
-    //   text: result.join('\n'),
-    // }));
+    conv.ask(new MediaObject({
+      name: 'Hukamnama',
+      url: 'http://old.sgpc.net/hukumnama/jpeg%20hukamnama/hukamnama.mp3',
+      description: 'Hukamnama audio from SGPC website',
+      icon: new Image({
+        url: 'https://www.google.com/search?safe=active&tbm=isch&source=hp&biw=1440&bih=839&ei=MV74XIr4LI26_wS2toaQCw&q=darbar+sahib+128x128&oq=darbar+sahib+128x128&gs_l=img.3...1721.6578..6832...1.0..0.86.1533.22......0....1..gws-wiz-img.....0..35i39j0j0i8i30j0i24.dxTH9dt9yto#imgrc=Pm752VEh7dt6TM:',
+      }),
+    })+ new BasicCard({
+      title: '',
+      text: result.join('  \n'),
+      buttons: new Button({
+        title: 'See my source!',
+        url: 'https://www.sikhitothemax.org/hukamnama',
+      }),
+
+    }));
     if(!conv.screen) {
       conv.ask(cards['BaniDB'].text);
+      conv.ask(new Suggestions(['Who created you?', 'Random Shabad']));
     }else {
       conv.ask(new BasicCard(cards['BaniDB']));
     }
     return;
   }).catch((error) => {
     console.error("errorMessage:", error);
-    conv.ask("Sorry we couldn't get Hukamnama for you ): ");
     conv.ask(new BasicCard(cards['Error']));
     return;
   });
